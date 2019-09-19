@@ -1,21 +1,22 @@
 Disable journal on a HFS+ drive
 =============================
 
-I have a USB hard drive and I connected it to may MAC as external storage. Recently I want to connect this hard drive to my raspberry PI so my RP4 can works as NSA.
+I have a USB hard drive and I connected it to my MAC as external storage. And recently I want to use it on my RP4 so my RP4 can works as NSA.
 
-And soon I realized the problem:  
+Soon I realized the problem:  
 * The hard drive is formatted with HFS+ **JOURNALED**.
 * The HFS+ JOURNALED file system is read only on Linux.
 * Read-only file system is definitely unacceptable to me.
+* I can't afford losing the data on the drive, so re-formatting the drive is off the table.
 
 After a few googling, I understand that:
-* HFS+ file system is writable only if journal is turned off.
-* One can turn it off using the `disk utility` of MAC.
+* HFS+ file system is writable only if journal is turned off on Linux.
+* One easliy can turn it off using the `disk utility` of OSX.
 
-But I don't have my macbook by myside, it seems a dead end. So I was thinking can I turn it off by myself. Fortunately the answer this **YES**.
+But I don't have my macbook by myside, it seems a dead end. So I was thinking can I turn it off by myself, fortunately the answer this **YES**.
 
-I found some perfect document of [HFS+ head](http://dubeyko.com/development/FileSystems/HFSPLUS/hexdumps/hfsplus_volume_header.html#attributes), it seems quite straight-forward.
-There is an attribute (offset is 4) in HFS+ volume head, and the 14th bit indicate if journal is turned on.
+I found one perfect document of [HFS+ head](http://dubeyko.com/development/FileSystems/HFSPLUS/hexdumps/hfsplus_volume_header.html#attributes), it seems quite straight-forward.
+There is an attribute (offset is 4) on the HFS+ volume head, and the 14th bit indicate if journal is turned on.
 
 |Bit|Attribute name|Description
 |---|---|---
@@ -24,7 +25,7 @@ There is an attribute (offset is 4) in HFS+ volume head, and the 14th bit indica
 |13|kHFSVolumeJournaledBit|If this bit is set, the volume has a journal.|
 |...|...|...|
 
-OK, then let's clear this bit.
+OK, then let's clear the bit.
 ```c
 #include <stdio.h>
 #include <assert.h>
