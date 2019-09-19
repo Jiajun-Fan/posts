@@ -55,7 +55,7 @@ static int isLittleEndian() {
 }
 
 int main(int argc, const char** argv) {
-  // open the device specified the 1st argument
+  // open the device specified by the 1st argument
   // It's something like /dev/sda1 on linux
   int fd = open(argv[1], O_RDWR);
   assert(fd > 0);
@@ -64,10 +64,10 @@ int main(int argc, const char** argv) {
   unsigned char* buff = (unsigned char*)mmap(NULL, kVolumeOffset+kHeadSize, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
   assert(buff != (unsigned char*)-1);
 
-  // seek to HFS+ head
+  // seek to HFS+ volume head
   unsigned char* data = buff + kVolumeOffset;
 
-  // check head magic
+  // check the head magic
   assert(data[0] == 'H' && data[1] == '+');
 
   // get attribute
