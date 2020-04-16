@@ -1,7 +1,7 @@
 Disable journal on a HFS+ drive
 =============================
 
-I have a USB hard drive and I connected it to my MAC as external storage. And recently I want to use it on my RP4 so my RP4 can works as NSA.
+I have a USB hard drive and I connected it to my MAC as external storage. And recently I want to use it on my RP4 so my RP4 can works as NAS.
 
 Soon I realized the problem:  
 * The hard drive is formatted with HFS+ **JOURNALED**.
